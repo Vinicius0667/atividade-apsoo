@@ -1,24 +1,26 @@
 package com.Client;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.Client.view.ClienteView;
+
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("Tentando conectar ao banco de dados...");
-
-        String url = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://db:5432/client");
-        String user = System.getenv().getOrDefault("DB_USER", "postgres");
-        String password = System.getenv().getOrDefault("DB_PASSWORD", "postgres");
-
-        try (Connection conexao = DriverManager.getConnection(url, user, password)) {
-            if (conexao != null && !conexao.isClosed()) {
-                System.out.println("SUCESSO! Conectado ao PostgreSQL com sucesso!");
-            }
-        } catch (SQLException e) {
-            System.err.println("FALHA na conexão com o banco de dados:");
+        // Tentativa de usar o visual padrão do sistema operacional
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Iniciar a aplicação Swing
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ClienteView view = new ClienteView();
+                view.setVisible(true);
+            }
+        });
     }
 }
