@@ -42,8 +42,7 @@ CREATE TABLE IF NOT EXISTS public.usuario (
     cpf varchar(14) NULL,
     CONSTRAINT usuarios_email_key UNIQUE (email),
     CONSTRAINT usuarios_telefone_key UNIQUE (telefone),
-    CONSTRAINT usuarios_pkey PRIMARY KEY (id),
-    CONSTRAINT usuarios_tipo_conta_id_fkey FOREIGN KEY (tipo_conta_id) REFERENCES public.tipo_conta(id)
+    CONSTRAINT usuarios_pkey PRIMARY KEY (id)
 );
 ALTER TABLE public.usuario ENABLE ROW LEVEL SECURITY;
 
@@ -51,7 +50,7 @@ ALTER TABLE public.usuario ENABLE ROW LEVEL SECURITY;
 -- 3. TABELAS CLIENTE E PROFISSIONAL (Dependem de usuario e cargo_profissional)
 -- ======================================================================
 
-CREATE TABLE IF NOT EXISTS public.cliente (
+CREATE TABLE IF NOT EXISTS cliente (
     id uuid NOT NULL,
     CONSTRAINT cliente_pkey PRIMARY KEY (id),
     CONSTRAINT cliente_id_fkey FOREIGN KEY (id) REFERENCES public.usuario(id) ON DELETE CASCADE

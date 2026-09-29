@@ -16,15 +16,19 @@ services:
     restart: unless-stopped
 
   app:
-      build: .
-      container_name: meu-projeto-java
-      depends_on:
-        db:
-          condition: service_healthy
-      environment:
-        - DB_URL=jdbc:postgresql://db:5432/client
-        - DB_USER=root
-        - DB_PASSWORD=root
-      ports:
-        - "8080:8080"
-      restart: unless-stopped
+    build: .
+    container_name: meu-projeto-java
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/client
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DISPLAY=${DISPLAY:-:0}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    security_opt:
+      - label=disable
+    userns: keep-id
+    restart: unless-stopped

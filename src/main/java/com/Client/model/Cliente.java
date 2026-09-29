@@ -6,7 +6,7 @@ public class Cliente extends Usuario {
     
     public Cliente() {
         super();
-        this.setTipoContaId(1); // ID fixo para Cliente
+        this.setTipoContaId(1);
     }
 
     public Cliente(UUID id, String nome, String telefone, String email, String senha, String cpf) {

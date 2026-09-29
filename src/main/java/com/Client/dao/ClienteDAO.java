@@ -12,8 +12,8 @@ import java.util.UUID;
 public class ClienteDAO {
 
     public void inserir(Cliente cliente) throws SQLException {
-        String sqlUsuario = "INSERT INTO public.usuario (nome, telefone, email, senha, cpf, tipo_conta_id) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
-        String sqlCliente = "INSERT INTO public.cliente (id) VALUES (?)";
+        String sqlUsuario = "INSERT INTO usuario (nome, telefone, email, senha, cpf, tipo_conta_id) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+        String sqlCliente = "INSERT INTO cliente (id) VALUES (?)";
 
         Connection conn = null;
         try {
@@ -22,7 +22,6 @@ public class ClienteDAO {
 
             UUID idGerado = null;
 
-            // Insere em usuario
             try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario)) {
                 stmtUsuario.setString(1, cliente.getNome());
                 stmtUsuario.setString(2, cliente.getTelefone());
@@ -47,7 +46,6 @@ public class ClienteDAO {
                 throw new SQLException("Falha ao obter o ID gerado para o usuário.");
             }
 
-            // Insere em cliente
             try (PreparedStatement stmtCliente = conn.prepareStatement(sqlCliente)) {
                 stmtCliente.setObject(1, idGerado);
                 stmtCliente.executeUpdate();
